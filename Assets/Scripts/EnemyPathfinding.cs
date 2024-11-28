@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class EnemyPathfinding : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private float moveSpeed = 2f;
+    private Vector2 moveDir;
+    private Rigidbody2D rb;
+
+    private void Awake()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        rb.MovePosition(rb.position + moveDir * (moveSpeed * Time.fixedDeltaTime));
+    }
+
+    public void MoveTo(Vector2 targetPosition)
+    {
+        moveDir = targetPosition;
     }
 }
