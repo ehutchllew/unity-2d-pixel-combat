@@ -3,15 +3,21 @@ using UnityEngine.InputSystem;
 
 public class Sword : MonoBehaviour
 {
+    [SerializeField] private GameObject slashAnimPrefab;
+    [SerializeField] private Transform slashAnimSpawnPoint;
     private ActiveWeapon activeWeapon;
     private Animator myAnimator;
     private PlayerController playerController;
     private PlayerControls playerControls;
+    private GameObject slashAnim;
 
     private void Attack()
     {
         // Fire sword animation
         myAnimator.SetTrigger("Attack");
+
+        slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity);
+        slashAnim.transform.parent = transform.parent;
     }
     private void Awake()
     {
