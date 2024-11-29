@@ -26,7 +26,7 @@ public class Sword : MonoBehaviour
         Vector3 mousePos = Mouse.current.position.ReadValue();
         Vector3 playerScreenLoc = Camera.main.WorldToScreenPoint(playerController.transform.position);
 
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(mousePos.y - playerScreenLoc.y, Mathf.Abs(mousePos.x - playerScreenLoc.x)) * Mathf.Rad2Deg;
 
         if (mousePos.x < playerScreenLoc.x)
         {
