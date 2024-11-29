@@ -26,14 +26,16 @@ public class Sword : MonoBehaviour
         Vector3 mousePos = Mouse.current.position.ReadValue();
         Vector3 playerScreenLoc = Camera.main.WorldToScreenPoint(playerController.transform.position);
 
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+
         if (mousePos.x < playerScreenLoc.x)
         {
-            activeWeapon.transform.rotation = Quaternion.Euler(0, -180, 0);
+            activeWeapon.transform.rotation = Quaternion.Euler(0, -180, angle);
         }
 
         if (mousePos.x > playerScreenLoc.x)
         {
-            activeWeapon.transform.rotation = Quaternion.Euler(0, 0, 0);
+            activeWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
     }
 
