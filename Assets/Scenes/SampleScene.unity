@@ -883,6 +883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slashAnimPrefab: {fileID: 2083023552202696163, guid: 95dd90462b56cc14a9d694dd036e87c0, type: 3}
   slashAnimSpawnPoint: {fileID: 1965441912}
+  weaponCollider: {fileID: 1975424026}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1859,14 +1860,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.11072105, y: 1.0596191}
+    - - {x: -0.12627715, y: 1.3940771}
       - {x: 0.37789786, y: 0.5000806}
       - {x: 0.47980168, y: 0.12164271}
       - {x: 0.27106744, y: -0.45286366}
-      - {x: -0.2045193, y: -0.7153299}
-      - {x: 0.97956836, y: -0.75791466}
-      - {x: 1.5347356, y: 0.015329391}
-      - {x: 1.3087707, y: 0.837072}
+      - {x: -0.2278535, y: -0.95645046}
+      - {x: 1.1662424, y: -0.92125463}
+      - {x: 1.7836345, y: 0.0075513422}
+      - {x: 1.3943298, y: 1.0315242}
   m_UseDelaunayMesh: 0
 --- !u!4 &2067666515 stripped
 Transform:
