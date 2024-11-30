@@ -16,6 +16,7 @@ public class Sword : MonoBehaviour
     {
         // Fire sword animation
         myAnimator.SetTrigger("Attack");
+        weaponCollider.gameObject.SetActive(true);
 
         slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity);
         slashAnim.transform.parent = transform.parent;
@@ -26,6 +27,11 @@ public class Sword : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         playerController = GetComponentInParent<PlayerController>();
         playerControls = new PlayerControls();
+    }
+
+    private void DoneAttackAnimEvent()
+    {
+        weaponCollider.gameObject.SetActive(false);
     }
 
     private void MouseFollowWithOffset()
