@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,8 +6,10 @@ public class Sword : MonoBehaviour
 {
     [SerializeField] private GameObject slashAnimPrefab;
     [SerializeField] private Transform slashAnimSpawnPoint;
+    [SerializeField] private float swordAttackCD = 0.5f;
     [SerializeField] private Transform weaponCollider;
     private ActiveWeapon activeWeapon;
+    private bool attackButtonDown, isAttacking = false;
     private Animator myAnimator;
     private PlayerController playerController;
     private PlayerControls playerControls;
@@ -14,12 +17,20 @@ public class Sword : MonoBehaviour
 
     private void Attack()
     {
+        isAttacking = true;
         // Fire sword animation
         myAnimator.SetTrigger("Attack");
         weaponCollider.gameObject.SetActive(true);
 
         slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity);
         slashAnim.transform.parent = transform.parent;
+
+        StartCoroutine(AttackCDRoutine());
+    }
+    private IEnumerator AttackCDRoutine()
+    {
+        yield return new WaitForSeconds(swordAttackCD);
+        isAttacking = false;
     }
     private void Awake()
     {
@@ -61,7 +72,18 @@ public class Sword : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerControls.Combat.Attack.started += _ => Attack();
+        playerControls.Combat.Attack.started += _ => StartAttacking();
+        playerControls.Combat.Attack.canceled += _ => StopAttacking();
+    }
+
+    private void StartAttacking()
+    {
+        attackButtonDown = true;
+    }
+
+    private void StopAttacking()
+    {
+        attackButtonDown = false;
     }
 
     public void SwingDownFlipAnim()
@@ -87,5 +109,9 @@ public class Sword : MonoBehaviour
     void Update()
     {
         MouseFollowWithOffset();
+        if (attackButtonDown && !isAttacking)
+        {
+            Attack();
+        }
     }
 }
