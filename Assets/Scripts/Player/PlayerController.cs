@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,9 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
     public static PlayerController Instance;
+    [SerializeField] private float dashSpeed = 4f;
     [SerializeField] private float moveSpeed = 4f;
+    [SerializeField] private TrailRenderer trail;
 
     private bool facingLeft = false;
+    private bool isDashing = false;
     private Animator myAnimator;
     private PlayerControls playerControls;
     private Rigidbody2D rb;
@@ -40,6 +44,28 @@ public class PlayerController : MonoBehaviour
         mySpriteRender = GetComponent<SpriteRenderer>();
     }
 
+    private void Dash()
+    {
+        if (!isDashing)
+        {
+            isDashing = true;
+            moveSpeed *= dashSpeed;
+            trail.emitting = true;
+            StartCoroutine(EndDashRoutine());
+        }
+    }
+
+    private IEnumerator EndDashRoutine()
+    {
+        float dashTime = 0.2f;
+        float dashCD = 0.25f;
+        yield return new WaitForSeconds(dashTime);
+        moveSpeed /= dashSpeed;
+        trail.emitting = false;
+        yield return new WaitForSeconds(dashCD);
+        isDashing = false;
+    }
+
     private void FixedUpdate()
     {
         AdjustPlayerFacingDirection();
@@ -66,7 +92,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        playerControls.Combat.Dash.performed += _ => Dash();
     }
 
     // Update is called once per frame
