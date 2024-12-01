@@ -6,7 +6,7 @@ public class Sword : MonoBehaviour
 {
     [SerializeField] private GameObject slashAnimPrefab;
     [SerializeField] private Transform slashAnimSpawnPoint;
-    [SerializeField] private float swordAttackCD = 0.5f;
+    [SerializeField] private float swordAttackCD = 0.3f;
     [SerializeField] private Transform weaponCollider;
     private ActiveWeapon activeWeapon;
     private bool attackButtonDown, isAttacking = false;

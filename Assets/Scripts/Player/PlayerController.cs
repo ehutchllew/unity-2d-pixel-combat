@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
+    public bool FacingLeft { get { return facingLeft; } }
     public static PlayerController Instance;
     [SerializeField] private float dashSpeed = 4f;
     [SerializeField] private float moveSpeed = 4f;
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer mySpriteRender;
     private Vector2 movement;
+    private float startingMoveSpeed;
 
     private void AdjustPlayerFacingDirection()
     {
@@ -27,12 +28,12 @@ public class PlayerController : MonoBehaviour
         if (mousePos.x < playerScreenLoc.x)
         {
             mySpriteRender.flipX = true;
-            FacingLeft = true;
+            facingLeft = true;
         }
         else
         {
             mySpriteRender.flipX = false;
-            FacingLeft = false;
+            facingLeft = false;
         }
     }
     private void Awake()
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
         float dashTime = 0.2f;
         float dashCD = 0.25f;
         yield return new WaitForSeconds(dashTime);
-        moveSpeed /= dashSpeed;
+        moveSpeed = startingMoveSpeed;
         trail.emitting = false;
         yield return new WaitForSeconds(dashCD);
         isDashing = false;
@@ -93,6 +94,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerControls.Combat.Dash.performed += _ => Dash();
+
+        startingMoveSpeed = moveSpeed;
     }
 
     // Update is called once per frame

@@ -8,7 +8,7 @@ public class SelfDestroy : MonoBehaviour
     {
         ps = GetComponent<ParticleSystem>();
     }
-    public void DestroySelf()
+    public void DestroySelfAnimEvent()
     {
         Destroy(gameObject);
     }
@@ -16,7 +16,7 @@ public class SelfDestroy : MonoBehaviour
     {
         if (ps && !ps.IsAlive())
         {
-            DestroySelf();
+            DestroySelfAnimEvent();
         }
     }
 }
